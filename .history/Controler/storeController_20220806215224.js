@@ -11,31 +11,31 @@ exports.getStore = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.createStore = asyncHandler(async (req, res) => {
   req.body.user = req.params.id;
-  // const { amount, number } = req.body;
-  // const store_check = await Store.findOne({ _id: req.params.id });
-  // if (store_check) {
-  //   const store = await Store.findByIdAndUpdate(
-  //     { _id: req.params.id },
-  //     {
-  //       amount: amount + store_check.amount,
-  //       number: number + store_check + number,
-  //     },
-  //     {
-  //       new: true,
-  //       runValidators: true,
-  //     }
-  //   );
-  //   res.status(200).json({
-  //     success: true,
-  //     data: store,
-  //   });
-  // } else {
+  const { amount, number } = req.body;
+  const store_check = await Store.findOne({ _id: req.params.id });
+  if (store_check) {
+    const store = await Store.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        amount: amount + store_check.amount,
+        number: number + store_check + number,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(200).json({
+      success: true,
+      data: store,
+    });
+  } else {
     const store = await Store.create(req.body);
     res.status(200).json({
       success: true,
       data: store,
     });
-  // }
+  }
 });
 
 // @desc      Update store
