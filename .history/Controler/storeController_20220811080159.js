@@ -30,11 +30,11 @@ exports.createStore = asyncHandler(async (req, res) => {
   //     data: store,
   //   });
   // } else {
-  const store = await Store.create(req.body);
-  res.status(200).json({
-    success: true,
-    data: store,
-  });
+    const store = await Store.create(req.body);
+    res.status(200).json({
+      success: true,
+      data: store,
+    });
   // }
 });
 
@@ -43,40 +43,23 @@ exports.createStore = asyncHandler(async (req, res) => {
 // @access    Private
 
 exports.updateStore = asyncHandler(async (req, res, next) => {
-  const { amount, date, title, type } = req.body;
+  const { amount, date, title } = req.body;
   try {
     const findOneStoreById = await Store.findOne({ _id: req.params.id });
-    if (type == "update") {
-      const store = await findOneStoreById.update(
-        {
-          title: title,
-          amount: amount,
-          number: findOneStoreById.number - findOneStoreById.amount + amount,
-          date: date,
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );  
-      res.status(200).json({ success: true, data: store });
-    }else{
+    const store = await findOneStoreById.update(
+      {
+        title: title,
+        amount: amount,
+        number: findOneStoreById.number -findOneStoreById.amount + amount,
+        date: date,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
-      const store = await findOneStoreById.update(
-        {
-          amount: findOneStoreById.amount+amount,
-          number: findOneStoreById.number + amount,
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );  
-      res.status(200).json({ success: true, data: store });
-
-    }
-
-  
+    res.status(200).json({ success: true, data: store });
   } catch (err) {
     next(err);
   }
