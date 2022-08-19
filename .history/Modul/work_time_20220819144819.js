@@ -1,25 +1,18 @@
 const mongoose = require("mongoose");
 
-const NoteSch = mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Please add a name"],
+const workSchi = mongoose.Schema({
+  hourse: {
+    type: Number,
+    required: [true, "Please add a hourse"],
   },
-  done: {
+  permition: {
     type: Boolean,
     default: false
   },
-
-  private: {
-    type: Boolean,
-    default: true
-  },
-
   date: {
     type: Date,
     default: Date.now,
   },
-
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "Auth",
@@ -28,4 +21,4 @@ const NoteSch = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("Note", NoteSch);
+module.exports = mongoose.model("Work_time", workSchi);

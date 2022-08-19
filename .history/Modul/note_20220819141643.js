@@ -5,25 +5,25 @@ const NoteSch = mongoose.Schema({
     type: String,
     required: [true, "Please add a name"],
   },
-  done: {
-    type: Boolean,
-    default: false
+  done:{
+    type:Boolean,
+    default:false
   },
 
-  private: {
-    type: Boolean,
-    default: true
+  private:{
+    type:Boolean,
+    default:true
   },
-
+  
   date: {
     type: Date,
     default: Date.now,
   },
-
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Auth",
-    require: true
+  
+  user:{
+    type:mongoose.Schema.ObjectId,
+    ref:"Auth",
+    require:true
   }
 
 });
