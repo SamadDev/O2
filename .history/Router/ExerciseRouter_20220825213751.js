@@ -2,8 +2,8 @@ const express = require('express');
 const {
   getExercies,
   createExercies,
-  updateexercies,
-  deleteexercies
+  updatEexercies,
+  deletEexercies
 } = require('../Controler/ExercisesControler');
 
 const advancedResults = require('../Midlware/advancedResults');
@@ -13,11 +13,11 @@ const router = express.Router();
 router
   .route('/')
   .get(
-    advancedResults(Exercies,{path:"user"}),getExercies);
+    advancedResults(Exercies),getExercies);
 
 router
   .route('/:id').post(createExercies)
-  .put(updateexercies)
-  .delete(deleteexercies);
+  .put(updatEexercies);
+  router.route("/:id/:product_id/:store_id").delete(deletEexercies);
 
 module.exports = router;

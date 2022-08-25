@@ -82,19 +82,18 @@ exports.deletEexercies = asyncHandler(async (req, res, next) => {
   try {
     const store=await Store.findOne({_id:req.params.store_id});
     const product=await Product.findOne({_id:req.params.product_id});
-    const exercies_one=await Exercies.findOne({_id:req.params.id});
-
-    await Product.findByIdAndUpdate(
-      { _id: req.params.product_id },
+    // const exercies=await Exercies.findOne({_id:req.params.product_id});
+    product.update(
+      { _id: product },
       {
-        amount: product.amount + exercies_one.amount,
+        number: product.amount - exercies.amount,
       },
       { new: true, runValidators: true }
     );
-    await Store.findByIdAndUpdate(
-      { _id: req.params.store_id },
+    store.update(
+      { _id: store_id },
       {
-        number: store.number + exercies_one.amount,
+        number: store.number - exercies.amount,
       },
       { new: true, runValidators: true }
     );

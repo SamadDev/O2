@@ -17,7 +17,7 @@ exports.createExercies = asyncHandler(async (req, res) => {
   const store = await Store.findOne({ _id: store_id });
   const product = await Product.findOne({ _id: product_id });
 
- const p= await Product.findByIdAndUpdate(
+ const p= product.findByIdAndUpdate(
   {
     _id:product_id
   },
@@ -26,7 +26,7 @@ exports.createExercies = asyncHandler(async (req, res) => {
     },
     { new: true, runValidators: true }
   );
- const s= await Store.findByIdAndUpdate(
+ const s= store.findByIdAndUpdate(
     {_id:store_id},
     {
       number: store.number - amount,
@@ -82,19 +82,17 @@ exports.deletEexercies = asyncHandler(async (req, res, next) => {
   try {
     const store=await Store.findOne({_id:req.params.store_id});
     const product=await Product.findOne({_id:req.params.product_id});
-    const exercies_one=await Exercies.findOne({_id:req.params.id});
-
-    await Product.findByIdAndUpdate(
-      { _id: req.params.product_id },
+    product.update(
+      { _id: product },
       {
-        amount: product.amount + exercies_one.amount,
+        number: product.amount-exercies.amount,
       },
       { new: true, runValidators: true }
     );
-    await Store.findByIdAndUpdate(
-      { _id: req.params.store_id },
+    store.update(
+      { _id: store_id },
       {
-        number: store.number + exercies_one.amount,
+        number: store.number-exercies.amount,
       },
       { new: true, runValidators: true }
     );

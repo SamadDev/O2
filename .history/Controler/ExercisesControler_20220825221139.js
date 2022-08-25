@@ -87,14 +87,14 @@ exports.deletEexercies = asyncHandler(async (req, res, next) => {
     await Product.findByIdAndUpdate(
       { _id: req.params.product_id },
       {
-        amount: product.amount + exercies_one.amount,
+        amount: product.amount - exercies_one.amount,
       },
       { new: true, runValidators: true }
     );
     await Store.findByIdAndUpdate(
       { _id: req.params.store_id },
       {
-        number: store.number + exercies_one.amount,
+        number: store.number - exercies_one.amount,
       },
       { new: true, runValidators: true }
     );

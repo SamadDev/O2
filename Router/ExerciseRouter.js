@@ -13,11 +13,11 @@ const router = express.Router();
 router
   .route('/')
   .get(
-    advancedResults(Exercies,{path:"user"}),getExercies);
+    advancedResults(Exercies),getExercies);
 
 router
   .route('/:id').post(createExercies)
   .put(updatEexercies);
-  router.route("/:product_id/:store_id").delete(deletEexercies);
+  router.route("/:id/:product_id/:store_id").delete(deletEexercies);
 
 module.exports = router;
