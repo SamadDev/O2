@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 
-const ExerciseSch = mongoose.Schema({
+const NoteSch = mongoose.Schema({
   title: {
     type: String,
     required: [true, "Please add a name"],
   },
-
-  amount: {
-    type: Number,
-    default: 0,
+  done: {
+    type: Boolean,
+    default: false
   },
 
-  type: {
-    type: String,
-    default: "چاکبوو",
+  private: {
+    type: Boolean,
+    default: true
   },
+
   date: {
     type: Date,
     default: Date.now,
@@ -23,8 +23,9 @@ const ExerciseSch = mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "Auth",
-    require: true,
-  },
+    require: true
+  }
+
 });
 
-module.exports = mongoose.model("exercise", ExerciseSch);
+module.exports = mongoose.model("Note", NoteSch);
