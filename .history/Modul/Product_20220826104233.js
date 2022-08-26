@@ -8,15 +8,15 @@ const ProdcutSch = mongoose.Schema({
   },
   category: {
     type: String,
-    default: "",
+    default: ""
   },
   amount: {
     type: Number,
-    default: 0,
+    default: 0
   },
   store_id: {
     type: String,
-    require: true,
+    default: ''
   },
 
   date: {
@@ -26,14 +26,10 @@ const ProdcutSch = mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "Auth",
-    require: true,
-  },
-  store: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Store",
     require: true
   }
+
 });
-ProdcutSch.index({user: 1, store_id: 1}, {unique: true});
+ProdcutSch.index({ user: 1, store_id: 1});
 
 module.exports = mongoose.model("Product", ProdcutSch);

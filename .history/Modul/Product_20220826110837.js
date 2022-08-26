@@ -34,6 +34,5 @@ const ProdcutSch = mongoose.Schema({
     require: true
   }
 });
-ProdcutSch.index({user: 1, store_id: 1}, {unique: true});
 
 module.exports = mongoose.model("Product", ProdcutSch);

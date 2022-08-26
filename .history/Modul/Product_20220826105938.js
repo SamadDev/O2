@@ -28,12 +28,12 @@ const ProdcutSch = mongoose.Schema({
     ref: "Auth",
     require: true,
   },
-  store: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Store",
-    require: true
-  }
+  // store: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "Store",
+  //   require: true
+  // }
 });
-ProdcutSch.index({user: 1, store_id: 1}, {unique: true});
+ProdcutSch.index({ store_id: 1, user: 1 });
 
 module.exports = mongoose.model("Product", ProdcutSch);

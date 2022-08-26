@@ -80,8 +80,8 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
   try {
-    let store = await Store.findById({ _id: req.params.store_id });
-    let product = await Product.findById({ _id: req.params.product_id });
+    let store = await Store.findOne({ _id: req.params.store_id });
+    let product = await Product.findOne({ _id: req.params.product_id });
     console.log(product);
     await store.update(
       {
