@@ -19,26 +19,25 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   );
 
 
-  const types = ["title", "user","type","product_id","startDate","endDate"];
-  let queryObj = JSON.parse(queryStr);
-  for (const type of types) {
-    if (queryObj[type]) {
-      console.log(queryObj[type]);
-      queryObj[type] = queryObj[type].trim().split(",");
-    }else{
-      delete queryObj[type];
-      console.log(queryObj[type]);
-    }
-  }
-
   // Finding resource
-  query = model.find(queryObj);
+  query = model.find(JSON.parse(queryStr));
 
   // Select Fields
   if (req.query.select) {
     const fields = req.query.select.split(",").join(" ");
     query = query.select(fields);
   }
+
+  // const types = ["title", "user","type","product_id","startDate","endDate"];
+  // for (const type of types) {
+  //   if (query[type]) {
+  //     query[type] = query[type].trim().split(",");
+  //     console.log('if note delte');
+  //   }else{
+  //     console.log('if delte');
+  //     delete query[type];
+  //   }
+  // }
 
   // Sort
   if (req.query.sort) {

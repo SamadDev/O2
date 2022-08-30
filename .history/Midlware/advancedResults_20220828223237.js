@@ -19,6 +19,15 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   );
 
 
+  // Finding resource
+  query = model.find(JSON.parse(queryStr));
+
+  // Select Fields
+  if (req.query.select) {
+    const fields = req.query.select.split(",").join(" ");
+    query = query.select(fields);
+  }
+
   const types = ["title", "user","type","product_id","startDate","endDate"];
   let queryObj = JSON.parse(queryStr);
   for (const type of types) {
@@ -29,15 +38,6 @@ const advancedResults = (model, populate) => async (req, res, next) => {
       delete queryObj[type];
       console.log(queryObj[type]);
     }
-  }
-
-  // Finding resource
-  query = model.find(queryObj);
-
-  // Select Fields
-  if (req.query.select) {
-    const fields = req.query.select.split(",").join(" ");
-    query = query.select(fields);
   }
 
   // Sort

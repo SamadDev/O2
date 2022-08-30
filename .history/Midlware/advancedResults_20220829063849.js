@@ -32,7 +32,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   }
 
   // Finding resource
-  query = model.find(queryObj);
+  query = model.find(JSON.parse(queryObj));
 
   // Select Fields
   if (req.query.select) {
