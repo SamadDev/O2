@@ -13,10 +13,19 @@ const ExerciseSch = mongoose.Schema({
 
   type: {
     type: String,
-    default: "heal",
-    anum: ["heal", "crash"],
+    default: "چاکبوو",
+  },
+  store_id: {
+    type: String,
+  },
+  product_id: {
+    type: String,
   },
   date: {
+    type: Date,
+    default: Date.now,
+  },
+  date_hours: {
     type: Date,
     default: Date.now,
   },

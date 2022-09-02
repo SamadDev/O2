@@ -25,7 +25,7 @@ const ExerciseSch = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  date_hours: {
+  date_hourse: {
     type: Date,
     default: Date.now,
   },
