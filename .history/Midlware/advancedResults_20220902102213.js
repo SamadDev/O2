@@ -19,7 +19,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   );
 
 
-  const types = ["title", "user","type","product_id"];
+  const types = ["title", "user","type","product_id","date"];
   let queryObj = JSON.parse(queryStr);
   for (const type of types) {
     if (queryObj[type]) {
