@@ -1,19 +1,23 @@
 const ErrorResponse = require("../Uitils/ErrorResponse");
 const User = require("../Modul/Auth");
+const Product = require("../Modul/Product");
+const Excercise = require("../Modul/exercise");
+const Note = require("../Modul/note");
+const Work = require("../Modul/work_time");
 const bcrypt = require("bcrypt");
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = async (req, res, next) => {
-  const { name, password, phone,role } = req.body;
+  const { name, password, phone, role } = req.body;
   try {
     // Create user
     const user = await User.create({
       name,
       password,
       phone,
-      role
+      role,
     });
 
     // Create token
@@ -29,8 +33,8 @@ exports.register = async (req, res, next) => {
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = async (req, res, next) => {
-  const { phone, password,role } = req.body;
-  const user = await User.findOne({ phone ,role }).select("+password");
+  const { phone, password, role } = req.body;
+  const user = await User.findOne({ phone, role }).select("+password");
   if (!user) {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
@@ -106,31 +110,50 @@ exports.updateDetails = async (req, res, next) => {
   }
 };
 
-
 // @desc      Update password
 // @route     PUT /api/v1/auth/updatepassword
 // @access    Private
-exports.updatePassword = (async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
+exports.updatePassword = async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
 
   console.log(user);
   // Check current password
   if (!(await user.matchPassword(req.body.currentPassword))) {
-    return next(new ErrorResponse('Password is incorrect', 401));
+    return next(new ErrorResponse("Password is incorrect", 401));
   }
 
   user.password = req.body.newPassword;
   await user.save();
 
   sendTokenResponse(user, 200, res);
-});
+};
 
+// @desc      Delete user
+// @route     DELETE /api/v1/user/:id
+// @access    Private
+exports.deleteUser = async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    let if_containe_product = await Product.findOne({ user: req.params.id });
+    if (if_containe_product) {
+      res.status(400).json({
+        success: false,
+        data: "ببورە ناتوانی ئەم بابە بسریتەوە لە شوێنیتر بەکارهاتوە",
+      });
+    } else {
+      console.log("delete user");
+      await User.findByIdAndDelete(req.params.id);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
 
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
-//todo expire jwt_cookie_expire not working
+  //todo expire jwt_cookie_expire not working
   // const options = {
   //   expires: new Date(
   //     Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000

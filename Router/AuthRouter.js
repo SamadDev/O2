@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, getMe,updateDetails,logout ,getUsers,updatePassword} = require('../Controler/AuthController');
+const { register, login, getMe,updateDetails,logout ,getUsers,updatePassword,deleteUser} = require('../Controler/AuthController');
 
 const router = express.Router();
 
@@ -11,6 +11,7 @@ router.put('/updatePassword',protect,updatePassword);
 router.get('/logout',protect,logout);
 router.get('/me',protect,getMe);
 router.get('/getUsers',getUsers);
+router.delete('/deleteUser/:id',deleteUser);
 router.put('/updatedetails',protect,updateDetails);
 
 
