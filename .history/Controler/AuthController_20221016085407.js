@@ -136,17 +136,13 @@ exports.deleteUser = async (req, res, next) => {
     console.log(req.params.id);
     let if_containe_product = await Product.findOne({ user: req.params.id });
     if (if_containe_product) {
-      res.status(401).json({
+      res.status(400).json({
         success: false,
-        data: "ببورە ناتوانی ئەم بابەتە بسریتەوە لە شوێنیتر بەکارهاتوە",
+        data: "ببورە ناتوانی ئەم بابە بسریتەوە لە شوێنیتر بەکارهاتوە",
       });
     } else {
       console.log("delete user");
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json({
-        success: false,
-        data: 'ئەم کارمەندە بە سەرکەوتوی سرایەوە',
-      });
     }
   } catch (err) {
     next(err);
